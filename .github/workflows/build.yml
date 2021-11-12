@@ -7,7 +7,7 @@ on:
     branches:
       - main
 # 執行工作列表
-job:
+jobs:
   build-and-deploy:
     # 執行環境
     runs-on: ubuntu-latest
