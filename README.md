@@ -1,11 +1,38 @@
-## Vue 3 + Typescript + Vite
+# The F2E 前端 &amp; UI 修煉精神時光屋(2021)
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 相關連結
 
-## Recommended IDE Setup
+1. [The F2E 前端 &amp; UI 修煉精神時光屋](https://2021.thef2e.com/)
+2. [TDX 運輸資料流通服務](https://tdx.transportdata.tw/api-service/swagger)
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+## Week1 - 台灣旅遊景點導覽
 
-## Type Support For `.vue` Imports in TS
+![week1 banner](https://2021.thef2e.com/_nuxt/img/week1.1822666.png)
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+> 全台觀光景點報你知，交通餐飲旅宿通通有！
+
+- [設計稿](https://2021.thef2e.com/users/6296427084285739424)
+- [API](https://ptx.transportdata.tw/MOTC?t=Tourism&v=2)
+
+## Week2 - 自行車道地圖資訊整合網
+
+![Week2 banner](https://2021.thef2e.com/_nuxt/img/week2.3ba5070.png)
+
+> 即時更新自行車租借資訊，不怕到站車位空！
+
+- 設計稿
+- API
+
+## Week3 - 全台公車動態時刻查詢應用服務
+
+> 公車動態隨時查，轉車順暢沒煩惱！
+
+- 設計稿
+- API
+
+
+|       | 主題                         | 設計稿                                                      | API                                                    |
+| ----- | ---------------------------- | ----------------------------------------------------------- | ------------------------------------------------------ |
+| Week1 | 台灣旅遊景點導覽             | [設計稿](https://2021.thef2e.com/users/6296427084285739424) | [API](https://ptx.transportdata.tw/MOTC?t=Tourism&v=2) |
+| Week2 | 自行車道地圖資訊整合網       | -                                                           | -                                                      |
+| Week3 | 全台公車動態時刻查詢應用服務 | -                                                           | -                                                      |
