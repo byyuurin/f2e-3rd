@@ -8,6 +8,7 @@ import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 const regex = /\/index\.(htm|html)$/i;
+const root = import.meta.env.BASE_URL;
 
 if (regex.test(route.path)) {
   router.replace(route.path.replace(regex, '/'));
@@ -20,7 +21,7 @@ if (regex.test(route.path)) {
       <svg-twemoji-crying-face class="text-[40px]" />
       <div class="py-2 text-center">
         <h3 class="text-2xl">沒有這個頁面哦…</h3>
-        <router-link to="/" class="text-lg text-orange-400 dark:text-yellow-300">回去吧</router-link>
+        <router-link :to="root" class="text-lg text-orange-400 dark:text-yellow-300">回去吧</router-link>
       </div>
     </div>
   </div>
