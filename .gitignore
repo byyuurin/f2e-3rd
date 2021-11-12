@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+dist
+dist-ssr
+node_modules
+*.local
+*.log
+auto-imports.d.ts
+components.d.ts

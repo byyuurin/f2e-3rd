@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "johnsoncodehk.volar",
+    "voorjaar.windicss-intellisense",
+    "teamchilla.blueprint"
+  ]
+}

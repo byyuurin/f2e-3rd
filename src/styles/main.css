@@ -1,0 +1,42 @@
+::-webkit-scrollbar,
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-resizer,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track-piece {
+    @apply bg-transparent;
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-thumb {
+    @apply rounded-md;
+}
+
+::-webkit-scrollbar-button {
+    @apply w-1 h-1;
+}
+
+::-webkit-scrollbar {
+    @apply w-2 h-2;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-true-gray-900 bg-opacity-25 dark:(bg-light-900 bg-opacity-10);
+
+  &:hover {
+      @apply bg-true-gray-900 bg-opacity-35 dark:(bg-light-900 bg-opacity-20);
+  }
+
+  &:active {
+      @apply bg-true-gray-900 bg-opacity-45 dark:(bg-light-900 bg-opacity-30);
+  }
+}
+
+html,
+body {
+  @apply h-full overflow-hidden;
+}
+
+#app {
+  @apply h-full overflow-auto transition duration-250 bg-light-50 text-dark-900 dark:bg-dark-400 dark:text-true-gray-400;
+}

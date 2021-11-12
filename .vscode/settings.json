@@ -1,0 +1,38 @@
+{
+  /* Base
+  -------------------------------------------------------------------------- */
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "files.associations": {
+    "*.css": "postcss",
+  },
+  /* [plugin] prettier
+  -------------------------------------------------------------------------- */
+  "prettier.enable": false,
+  /* [plugin] Blueprint
+  -------------------------------------------------------------------------- */
+  "blueprint.templatesPath": [
+    ".vscode/templates"
+  ],
+  /* [plugin] Code Spell Checker
+  -------------------------------------------------------------------------- */
+  "cSpell.words": [
+    "VITE",
+    "vueuse",
+    "windi"
+  ],
+  /* [plugin] ESLint
+  -------------------------------------------------------------------------- */
+  "eslint.format.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "vue",
+    "json"
+  ],
+  /* [plugin] WindiCSS intellisense
+  -------------------------------------------------------------------------- */
+  "windicss.sortOnSave": false,
+  "windicss.enableCodeFolding": false,
+}
