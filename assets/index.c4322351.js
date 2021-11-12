@@ -1,0 +1,1 @@
+import{_ as o}from"./search.0f982919.js";import{_ as r}from"./plugin-vue_export-helper.5a098b48.js";import{o as t,c as s,w as a,D as c}from"./vendor.4a872063.js";const _={},n=c("Hotel");function f(i,m){const e=o;return t(),s(e,null,{default:a(()=>[n]),_:1})}var u=r(_,[["render",f]]);export{u as default};

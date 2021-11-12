@@ -1,0 +1,1 @@
+import{_ as r}from"./search.0f982919.js";import{_ as t}from"./plugin-vue_export-helper.5a098b48.js";import{o,c as s,w as a,D as c}from"./vendor.4a872063.js";const _={},n=c("Restaurant");function f(i,m){const e=r;return o(),s(e,null,{default:a(()=>[n]),_:1})}var l=t(_,[["render",f]]);export{l as default};
