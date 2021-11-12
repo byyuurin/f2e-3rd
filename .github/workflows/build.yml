@@ -30,7 +30,7 @@ jobs:
       - name: Install and Build
         run: |
           pnpm install
-          pnpm dist
+          pnpm dist:gh-pages
 
       - name: Create 404.html
         run: |

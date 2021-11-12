@@ -6,6 +6,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",
     "dist": "vite build",
+    "dist:gh-pages": "vite build --base=/f2e-3rd",
     "serve": "vite preview"
   },
   "dependencies": {
