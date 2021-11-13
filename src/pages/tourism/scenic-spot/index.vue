@@ -20,7 +20,6 @@ const list = computed(() =>
 );
 
 const handleSearch = () => {
-  console.log('handleSearch');
   const { keyword, city } = unref(savedSearch);
   const targetCity = city && cityOptions.find((item) => item.value === city)?.label;
   const conditions: string[] = [];
