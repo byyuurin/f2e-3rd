@@ -10,7 +10,7 @@ const router = useRouter();
 const regex = /\/index\.(htm|html)$/i;
 
 if (regex.test(route.path)) {
-  router.replace(route.path.replace(regex, '/'));
+  router.replace('/');
 }
 </script>
 
