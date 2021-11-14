@@ -52,7 +52,6 @@ export function useService<M extends ModuleName>(module: M) {
       const url = ref(repackUrl(fullPath, defaultParams));
       const { data, execute, isFetching, onFetchError, onFetchFinally } = useFetch(url, {
         immediate: false,
-        refetch: true,
         beforeFetch: ({ options }) => {
           options.headers = {
             ...options.headers,
@@ -70,7 +69,10 @@ export function useService<M extends ModuleName>(module: M) {
         onFetchError,
         onFetchFinally,
         reload: (params: ModuleParams<M, P>) => {
-          url.value = repackUrl(fullPath, params);
+          if (!isFetching.value) {
+            url.value = repackUrl(fullPath, params);
+            execute();
+          }
         }
       };
     }
