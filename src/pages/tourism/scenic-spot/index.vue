@@ -4,37 +4,69 @@ meta:
 </route>
 
 <script lang="ts" setup>
+import { useAppAction } from '/src/meta';
 import { useService } from '/src/utils/service';
 import { savedSearch, cityOptions } from '/src/utils/service/shared';
 
 const service = useService('Tourism');
-const { data, reload } = service.request('/ScenicSpot', {});
+const summary = service.request('/ScenicSpot/', {});
+const search = service.request('/ScenicSpot/', {});
+const conditions = ref<string[]>([]);
+const pagination = ref({
+  page: 1,
+  size: 20
+});
+const appAction = useAppAction();
 
-const list = computed(() =>
-  data.value?.map((raw) => {
-    return {
-      City: raw.Address?.replace(/(\u7e23|\u5e02).*/, '$1'),
-      ...raw
-    };
-  })
-);
+const reload = () => {
+  const { page, size } = pagination.value;
+
+  appAction?.top();
+
+  setTimeout(() => {
+    search.reload({
+      $top: size,
+      $skip: (page - 1) * size,
+      $filter: conditions.value.join(' and '),
+      $orderby: 'UpdateTime desc'
+    });
+  }, 100);
+};
 
 const handleSearch = () => {
   const { keyword, city } = unref(savedSearch);
   const targetCity = city && cityOptions.find((item) => item.value === city)?.label;
-  const conditions: string[] = [];
+  conditions.value = ['City ne null', 'Description ne null'];
 
-  if (targetCity) conditions.push(`contains(Address, '${targetCity}')`);
-  if (keyword) conditions.push(`contains(Address, '${keyword}')`);
+  if (targetCity) conditions.value.push(`City eq '${targetCity}'`);
+  if (keyword) conditions.value.push(`contains(Name, '${keyword}')`);
 
-  reload({ $top: 10, $filter: conditions.length ? conditions.join(' and ') : undefined });
+  summary.reload({ $select: 'ID', $filter: conditions.value.join(' and ') });
+  pagination.value.page = 1;
+  reload();
+};
+
+const handlePageChange = (page: number) => {
+  pagination.value.page = page;
+  reload();
 };
 </script>
 
 <template>
-  <tourism-search class="text-orange-200" @search="handleSearch">
-    <div class="flex flex-wrap items-stretch m-auto max-w-screen-2xl p-2">
-      <div v-for="item of list" :key="item.ID" class="group w-full p-2 md:max-w-1/2 2xl:max-w-1/3 select-none">
+  <tourism-search
+    class="text-orange-200"
+    :loading="search.isFetching.value"
+    :total="summary.data.value?.length"
+    :pagination="pagination"
+    @search="handleSearch"
+    @page-change="handlePageChange"
+  >
+    <div class="flex flex-wrap items-stretch">
+      <div
+        v-for="item of search.data?.value"
+        :key="item.ID"
+        class="group w-full p-2 md:max-w-1/2 xl:max-w-1/3 2xl:max-w-1/4 select-none"
+      >
         <ui-card>
           <template #header>
             <div class="relative h-50 overflow-hidden bg-true-gray-200 dark:bg-dark-50">
@@ -44,7 +76,7 @@ const handleSearch = () => {
                   min-w-full min-h-full
                   transition
                   duration-750
-                  object-center object-contain
+                  object-center object-fill
                   transform
                   opacity-85
                   pointer-events-none

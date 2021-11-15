@@ -1,5 +1,5 @@
 <script lang="ts" setup></script>
 
 <template>
-  <tourism-search>Activity</tourism-search>
+  <tourism-search :total="0">Activity</tourism-search>
 </template>

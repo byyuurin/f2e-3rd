@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { injectRouteMeta } from '/src/meta';
+import { injectRouteMeta, injectAppAction } from '/src/meta';
 
 const route = useRoute();
 
@@ -10,6 +10,7 @@ const title = computed(() => {
 injectRouteMeta({
   title
 });
+injectAppAction();
 </script>
 
 <template>

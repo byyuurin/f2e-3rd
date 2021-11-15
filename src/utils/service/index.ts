@@ -21,9 +21,6 @@ const repackUrl = (raw: string, params: Record<string, any>) => {
   let url = raw;
   const query: string[] = ['$format=JSON'];
 
-  // 避免未設定時一次請求過多資料
-  params = { $top: 10, ...params };
-
   Object.keys(params).forEach((key) => {
     if (/\$.*/.test(key) && params[key]) {
       query.push(`${key}=${params[key]}`);
