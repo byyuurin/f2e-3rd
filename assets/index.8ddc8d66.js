@@ -1,0 +1,1 @@
+import{_ as e}from"./search.c8fa3472.js";import{_ as o}from"./button.4272bf82.js";import{o as a,c as r,w as s,E as c}from"./vendor.4745a6cd.js";const _={},n=c("Restaurant");function f(i,m){const t=e;return a(),r(t,{total:0},{default:s(()=>[n]),_:1})}var x=o(_,[["render",f]]);export{x as default};
