@@ -1,1 +1,0 @@
-import{_ as o}from"./search.c8fa3472.js";import{_ as e}from"./button.4272bf82.js";import{o as c,c as r,w as s,E as a}from"./vendor.4745a6cd.js";const _={},n=a("Activity");function f(i,m){const t=o;return c(),r(t,{total:0},{default:s(()=>[n]),_:1})}var x=e(_,[["render",f]]);export{x as default};
