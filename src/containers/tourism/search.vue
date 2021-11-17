@@ -28,6 +28,18 @@ const search = ref({
   ...unref(savedSearch)
 });
 
+const isOverlayVisible = ref(false);
+
+watchEffect(() => {
+  if (props.loading) {
+    isOverlayVisible.value = true;
+  } else {
+    setTimeout(() => {
+      isOverlayVisible.value = false;
+    }, 250);
+  }
+});
+
 const maxPage = computed(() => Math.ceil(props.total / props.pagination.size));
 const canPrev = computed(() => props.pagination.page > 1);
 const canNext = computed(() => props.pagination.page < maxPage.value);
@@ -58,7 +70,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="with-overlay" :class="{ 'is-active': props.loading }">
+  <div class="with-overlay" :class="{ 'is-active': isOverlayVisible }">
     <div
       class="
         m-2
@@ -67,6 +79,7 @@ onMounted(() => {
         py-18
         text-center
         rounded-md
+        select-none
         bg-gradient-to-br
         from-yellow-200
         to-light-100
@@ -78,8 +91,11 @@ onMounted(() => {
         <span class="px-2 text-dark-500 dark:text-light-50">您想去的地方</span>
       </div>
 
-      <div class="mx-auto max-w-screen-sm flex items-center text-dark-700" @keyup.enter="handleSearch">
-        <div class="m-2 relative inline-block rounded-md overflow-hidden flex-grow">
+      <div
+        class="mx-auto max-w-screen-sm flex flex-col sm:flex-row items-center text-dark-700"
+        @keyup.enter="handleSearch"
+      >
+        <div class="m-2 w-full sm:w-auto relative inline-block rounded-md overflow-hidden flex-grow">
           <input
             v-model="search.keyword"
             class="w-full h-12 px-3 pr-12 text-xl text-current outline-none truncate"
@@ -109,8 +125,11 @@ onMounted(() => {
             <svg-jam-search />
           </div>
         </div>
-        <div class="m-2 inline-block rounded-md overflow-hidden">
-          <select v-model="search.city" class="w-full px-2 h-12 text-current outline-none appearance-none">
+        <div class="m-2 w-full sm:w-auto rounded-md overflow-hidden">
+          <select
+            v-model="search.city"
+            class="w-full px-2 h-12 text-current outline-none appearance-none cursor-pointer"
+          >
             <option v-for="option of cityOptions" :key="option.value" :value="option.value">
               {{ option.label }}
             </option>
@@ -128,7 +147,21 @@ onMounted(() => {
       <slot />
       <div
         v-show="maxPage > 1"
-        class="flex justify-center items-center p-2 pt-6 text-center children:mx-1 whitespace-nowrap"
+        class="
+          sticky
+          z-5
+          bottom-0
+          flex
+          justify-center
+          items-center
+          p-2
+          py-4
+          text-center
+          children:mx-1
+          whitespace-nowrap
+          bg-light-50
+          dark:bg-dark-300
+        "
       >
         <ui-button class="text-small" :disabled="!canPrev" @click="handlePageChange('prev')">
           <template #content>
@@ -214,7 +247,7 @@ onMounted(() => {
     &:before {
       transition: z-index 0s 0s, background-color 0.5s 0s;
 
-      @apply z-5 bg-opacity-50 bg-light-50 dark:(bg-opacity-50 bg-dark-900);
+      @apply z-5 bg-opacity-90 bg-light-50 dark:(bg-opacity-90 bg-dark-900);
     }
   }
 }

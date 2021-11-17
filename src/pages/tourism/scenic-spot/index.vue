@@ -7,30 +7,30 @@ meta:
 import { useAppAction } from '/src/meta';
 import { useService } from '/src/utils/service';
 import { savedSearch, cityOptions } from '/src/utils/service/shared';
+import { ScenicSpotTourismInfo } from '/src/utils/service/entities';
 
 const service = useService('Tourism');
-const summary = service.request('/ScenicSpot/', {});
-const search = service.request('/ScenicSpot/', {});
+const summary = service.request('/ScenicSpot', {});
+const search = service.request('/ScenicSpot', {});
 const conditions = ref<string[]>([]);
 const pagination = ref({
   page: 1,
   size: 20
 });
 const appAction = useAppAction();
+const details = ref<ScenicSpotTourismInfo | null>(null);
 
 const reload = () => {
   const { page, size } = pagination.value;
 
-  appAction?.top();
+  search.reload({
+    $top: size,
+    $skip: (page - 1) * size,
+    $filter: conditions.value.join(' and '),
+    $orderby: 'UpdateTime desc'
+  });
 
-  setTimeout(() => {
-    search.reload({
-      $top: size,
-      $skip: (page - 1) * size,
-      $filter: conditions.value.join(' and '),
-      $orderby: 'UpdateTime desc'
-    });
-  }, 100);
+  appAction?.top();
 };
 
 const handleSearch = () => {
@@ -50,10 +50,16 @@ const handlePageChange = (page: number) => {
   pagination.value.page = page;
   reload();
 };
+
+const handleReadMore = (data: ScenicSpotTourismInfo) => {
+  appAction?.top(false);
+  details.value = data;
+};
 </script>
 
 <template>
   <tourism-search
+    v-show="!details"
     class="text-orange-200"
     :loading="search.isFetching.value"
     :total="summary.data.value?.length"
@@ -69,7 +75,7 @@ const handlePageChange = (page: number) => {
       >
         <ui-card>
           <template #header>
-            <div class="relative h-50 overflow-hidden bg-true-gray-200 dark:bg-dark-50">
+            <div class="group relative h-50 overflow-hidden bg-true-gray-200 dark:bg-dark-50">
               <img
                 v-if="item.Picture?.PictureUrl1"
                 class="
@@ -86,6 +92,39 @@ const handlePageChange = (page: number) => {
                 :alt="item.Picture?.PictureDescription1"
               />
               <div v-else class="flex justify-center items-center min-h-full text-2xl text-true-gray-500">暫無圖片</div>
+              <div
+                class="
+                  absolute
+                  z-1
+                  right-0
+                  bottom-0
+                  transition
+                  duration-300
+                  transform
+                  -translate-x-[25%]
+                  translate-y-[100%]
+                  group-hover:-translate-y-[25%]
+                "
+              >
+                <div
+                  class="
+                    inline-flex
+                    justify-center
+                    items-center
+                    w-12
+                    h-12
+                    rounded-1
+                    text-xl
+                    cursor-pointer
+                    bg-true-gray-100 bg-opacity-85
+                    hover:bg-opacity-100
+                    dark:bg-dark-200 dark:hover:bg-dark-100
+                  "
+                  @click="handleReadMore(item)"
+                >
+                  <svg-uiw-more />
+                </div>
+              </div>
             </div>
           </template>
           <h3 class="py-2 font-bold text-xl text-dark-900 dark:text-light-900" v-text="item.Name" />
@@ -109,4 +148,5 @@ const handlePageChange = (page: number) => {
       </div>
     </div>
   </tourism-search>
+  <tourism-scenic-spot v-if="details" :data="details" @close="details = null" />
 </template>

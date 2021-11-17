@@ -41,7 +41,7 @@ import { isDark } from '/src/meta';
         </div>
       </div>
     </div>
-    <div class="flex-grow bg-light-50 dark:text-white dark:bg-dark-300">
+    <div class="relative flex-grow bg-light-50 dark:text-white dark:bg-dark-300">
       <tourism-navigator />
       <router-view />
     </div>

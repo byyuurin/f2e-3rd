@@ -16,14 +16,15 @@ export const useRouteMeta = () => inject(InjectionRouteMeta)!;
 export const isDark = useDark();
 
 interface AppAction {
-  top: () => void;
+  top: (animated?: boolean) => void;
 }
 
 const injectionAppAction = defineInjectionKey<AppAction>();
 
 export const injectAppAction = () =>
   provide(injectionAppAction, {
-    top: () => document.querySelector('#app')?.scrollTo({ left: 0, top: 0, behavior: 'smooth' })
+    top: (animated = true) =>
+      document.querySelector('#app')?.scrollTo({ left: 0, top: 0, behavior: animated ? 'smooth' : 'auto' })
   });
 
 export const useAppAction = () => inject(injectionAppAction);
