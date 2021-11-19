@@ -95,45 +95,41 @@ onMounted(() => {
         class="mx-auto max-w-screen-sm flex flex-col sm:flex-row items-center text-dark-700"
         @keyup.enter="handleSearch"
       >
-        <div class="m-2 w-full sm:w-auto relative inline-block rounded-md overflow-hidden flex-grow">
-          <input
-            v-model="search.keyword"
-            class="w-full h-12 px-3 pr-12 text-xl text-current outline-none truncate"
-            type="text"
-            placeholder="搜尋關鍵字"
-          />
-          <div
-            class="
-              absolute
-              z-1
-              top-2
-              right-2
-              inline-flex
-              justify-center
-              items-center
-              h-8
-              w-8
-              rounded-md
-              text-light-50
-              bg-gradient-to-br
-              from-yellow-400
-              to-yellow-500
-              cursor-pointer
-            "
-            @click="handleSearch"
-          >
-            <svg-jam-search />
-          </div>
+        <div class="m-2 w-full sm:w-auto flex-grow">
+          <ui-input v-model:value="search.keyword" class="w-full" placeholder="搜尋關鍵字">
+            <template #suffix>
+              <div
+                class="
+                  inline-flex
+                  justify-center
+                  items-center
+                  h-8
+                  w-8
+                  rounded-md
+                  text-light-50
+                  bg-gradient-to-br
+                  from-yellow-400
+                  to-yellow-500
+                  cursor-pointer
+                "
+                @click="handleSearch"
+              >
+                <svg-jam-search />
+              </div>
+            </template>
+          </ui-input>
         </div>
-        <div class="m-2 w-full sm:w-auto rounded-md overflow-hidden">
-          <select
-            v-model="search.city"
-            class="w-full px-2 h-12 text-current outline-none appearance-none cursor-pointer"
-          >
-            <option v-for="option of cityOptions" :key="option.value" :value="option.value">
-              {{ option.label }}
-            </option>
-          </select>
+        <div class="m-2 w-full sm:w-auto">
+          <div class="rounded-md overflow-hidden shadow-md">
+            <select
+              v-model="search.city"
+              class="w-full px-2 h-12 text-current outline-none appearance-none cursor-pointer"
+            >
+              <option v-for="option of cityOptions" :key="option.value" :value="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
