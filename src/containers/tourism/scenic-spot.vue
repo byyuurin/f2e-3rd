@@ -82,7 +82,7 @@ const mapUrl = computed(() => {
         <p v-text="data.TravelInfo || '暫無資料'" />
       </div>
       <div class="w-full py-4 md:w-1/2 md:px-4">
-        <iframe class="w-full h-full h-80 rounded-sm overflow-hidden" :src="mapUrl" frameborder="0" />
+        <iframe class="w-full h-full h-120 rounded-sm overflow-hidden" :src="mapUrl" frameborder="0" />
       </div>
     </div>
   </div>
