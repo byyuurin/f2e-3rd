@@ -1,0 +1,1 @@
+import{_ as o}from"./search.351279e0.js";import{_ as t}from"./index.556cb401.js";import{o as c,c as r,w as s,G as a}from"./vendor.dec14b71.js";const _={},n=a("Hotel");function i(d,f){const e=o;return c(),r(e,{total:0},{default:s(()=>[n]),_:1})}var l=t(_,[["render",i]]);export{l as default};
