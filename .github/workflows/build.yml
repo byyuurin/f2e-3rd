@@ -18,8 +18,7 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: |
-            ~/.cache
+          path: ~/.cache
           key: cypress-cache-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Install pnpm
@@ -27,10 +26,10 @@ jobs:
         with:
           version: 6.15.1
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js v14
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: v14
           registry-url: https://registry.npmjs.org/
           cache: "pnpm"
 
