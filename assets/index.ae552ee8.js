@@ -1,1 +1,0 @@
-import{_ as t}from"./search.351279e0.js";import{_ as o}from"./index.556cb401.js";import{o as r,c as s,w as c,G as a}from"./vendor.dec14b71.js";const _={},n=a("Restaurant");function i(d,f){const e=t;return r(),s(e,{total:0},{default:c(()=>[n]),_:1})}var u=o(_,[["render",i]]);export{u as default};
