@@ -26,7 +26,7 @@ const emit = defineEmits(['click']);
       select-none
       whitespace-nowrap
       overflow-hidden
-      bg-yellow-200 bg-opacity-50
+      bg-true-gray-200 bg-opacity-50
       dark:bg-dark-100 dark:hover:bg-dark-50
       hover:bg-opacity-75
       active:bg-opacity-100
@@ -39,7 +39,7 @@ const emit = defineEmits(['click']);
   >
     <slot name="prefix" />
     <slot name="content">
-      <div class="px-[0.5em]"><slot /></div>
+      <div class="px-[0.5em] leading-none"><slot /></div>
     </slot>
     <slot name="suffix" />
   </div>
