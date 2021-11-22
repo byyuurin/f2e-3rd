@@ -67,7 +67,7 @@ export function useService<M extends ModuleName>(module: M) {
         onFetchFinally,
         reload: (params: ModuleParams<M, P>) => {
           if (!isFetching.value) {
-            url.value = repackUrl(fullPath, params);
+            url.value = repackUrl(fullPath, { ...defaultParams, ...params });
             execute();
           }
         }

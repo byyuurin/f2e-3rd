@@ -34,4 +34,4 @@ export const cityOptions = [
   { label: '金門縣', value: 'KinmenCounty' },
   { label: '澎湖縣', value: 'PenghuCounty' },
   { label: '連江縣', value: 'LienchiangCounty' }
-] as const;
+];
