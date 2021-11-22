@@ -29,16 +29,14 @@ import { isDark } from '/src/meta';
         <svg-vs-butterfly class="inline-block align-middle text-4xl text-light-50" />
       </div>
       <div class="flex-grow my-2 px-3 text-3xl">台灣旅遊景點導覽</div>
-      <div class="inline-flex items-center">
-        <ui-button class="px-7 text-lg">
+      <div class="py-4 inline-flex items-center" all="outline-solid-red-500 outline-opacity-0">
+        <!-- <ui-button class="mr-4 px-7 h-13">
           <template #prefix>
             <svg-zmdi-favorite class="text-sm text-orange-400 dark:text-yellow-300" />
           </template>
           <span class="text-sm">我的最愛</span>
-        </ui-button>
-        <div class="inline-block align-middle ml-4 py-4">
-          <dark-toggle v-model="isDark" />
-        </div>
+        </ui-button> -->
+        <dark-toggle v-model="isDark" class="h-13 w-13 text-lg" />
       </div>
     </div>
     <div class="relative flex-grow bg-light-50 dark:text-white dark:bg-dark-300">

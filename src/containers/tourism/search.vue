@@ -120,16 +120,7 @@ onMounted(() => {
           </ui-input>
         </div>
         <div class="m-2 w-full sm:w-auto">
-          <div class="rounded-md overflow-hidden shadow-md">
-            <select
-              v-model="search.city"
-              class="w-full px-2 h-12 text-current outline-none appearance-none cursor-pointer"
-            >
-              <option v-for="option of cityOptions" :key="option.value" :value="option.value">
-                {{ option.label }}
-              </option>
-            </select>
-          </div>
+          <ui-select v-model:value="search.city" :options="cityOptions" class="w-full" @update:value="handleSearch" />
         </div>
       </div>
     </div>
@@ -174,7 +165,7 @@ onMounted(() => {
             rounded-md
             overflow-hidden
             select-none
-            bg-yellow-200 bg-opacity-50
+            bg-true-gray-200 bg-opacity-50
             dark:bg-dark-100
             shadow-sm
             dark:shadow-light-900

@@ -1,14 +1,15 @@
 <route lang="yaml">
 meta:
-  title: 台灣旅遊景點導覽
+  title: 旅遊景點 - 台灣旅遊景點導覽
 </route>
 
 <script lang="ts" setup>
 import { useAppAction } from '/src/meta';
 import { useService } from '/src/utils/service';
 import { savedSearch, cityOptions } from '/src/utils/service/shared';
-import { ScenicSpotTourismInfo } from '/src/utils/service/entities';
 
+const router = useRouter();
+const route = useRoute();
 const service = useService('Tourism');
 const summary = service.request('/ScenicSpot', {});
 const search = service.request('/ScenicSpot', {});
@@ -18,7 +19,7 @@ const pagination = ref({
   size: 20
 });
 const appAction = useAppAction();
-const details = ref<ScenicSpotTourismInfo | null>(null);
+const detailId = computed(() => (route.query.id as string) || null);
 
 const reload = () => {
   const { page, size } = pagination.value;
@@ -51,15 +52,15 @@ const handlePageChange = (page: number) => {
   reload();
 };
 
-const handleReadMore = (data: ScenicSpotTourismInfo) => {
+const handleReadMore = (id?: string) => {
   appAction?.top(false);
-  details.value = data;
+  router.push({ path: route.path, query: { id } });
 };
 </script>
 
 <template>
   <tourism-search
-    v-show="!details"
+    v-show="!detailId"
     class="text-orange-200"
     :loading="search.isFetching.value"
     :total="summary.data.value?.length"
@@ -99,10 +100,10 @@ const handleReadMore = (data: ScenicSpotTourismInfo) => {
                   right-0
                   bottom-0
                   transition
+                  -translate-x-[25%] -translate-y-[25%]
+                  md:translate-y-[100%]
                   duration-300
                   transform
-                  -translate-x-[25%]
-                  translate-y-[100%]
                   group-hover:-translate-y-[25%]
                 "
               >
@@ -120,9 +121,9 @@ const handleReadMore = (data: ScenicSpotTourismInfo) => {
                     hover:bg-opacity-100
                     dark:bg-dark-200 dark:hover:bg-dark-100
                   "
-                  @click="handleReadMore(item)"
+                  @click="handleReadMore(item.ID)"
                 >
-                  <svg-uiw-more />
+                  <svg-entypo-location />
                 </div>
               </div>
             </div>
@@ -148,5 +149,5 @@ const handleReadMore = (data: ScenicSpotTourismInfo) => {
       </div>
     </div>
   </tourism-search>
-  <tourism-scenic-spot v-if="details" :data="details" @close="details = null" />
+  <tourism-scenic-spot v-if="detailId" :id="detailId" @close="handleReadMore" />
 </template>

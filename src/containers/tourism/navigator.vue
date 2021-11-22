@@ -16,7 +16,7 @@ const links = [
   <div class="flex flex-wrap justify-between items-center p-2 px-3 text-center">
     <div v-for="link of links" :key="link.name" class="w-1/2 md:w-1/4 p-2">
       <router-link :to="link">
-        <div class="h-15 leading-15 rounded-md bg-yellow-100 bg-opacity-50 dark:bg-dark-100">
+        <div class="h-15 leading-15 rounded-md bg-true-gray-200 bg-opacity-50 dark:bg-dark-100">
           <span class="pr-1 inline-block align-middle leading-none">
             <component :is="link.icon" class="text-2xl" />
           </span>
