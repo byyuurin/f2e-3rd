@@ -1,5 +1,16 @@
 <script lang="ts" setup>
-import { savedSearch, cityOptions } from '/src/utils/service/shared';
+import { cityOptions } from '/src/utils/service/config';
+import store, { GlobalQuery } from '/src/utils/service/store';
+
+const options = cityOptions.map((option) => {
+  if (!option.value) {
+    return option;
+  }
+  return {
+    label: option.label,
+    value: option.label
+  };
+});
 
 interface Props {
   loading?: boolean;
@@ -17,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<{
-  (event: 'search'): void;
+  (event: 'search', payload: GlobalQuery): void;
   (event: 'page-change', page: number): void;
 }>();
 
@@ -25,7 +36,7 @@ const route = useRoute();
 
 const search = ref({
   module: route.path.replace(/\/tourism\//, ''),
-  ...unref(savedSearch)
+  ...unref(store.global)
 });
 
 const isOverlayVisible = ref(false);
@@ -45,11 +56,9 @@ const canPrev = computed(() => props.pagination.page > 1);
 const canNext = computed(() => props.pagination.page < maxPage.value);
 
 const handleSearch = () => {
-  savedSearch.value = {
-    keyword: search.value.keyword,
-    city: search.value.city
-  };
-  emit('search');
+  const { keyword, city } = search.value;
+  store.global.value = { keyword, city };
+  emit('search', { keyword, city });
 };
 
 const handlePageChange = (type: 'prev' | 'next' | Event) => {
@@ -63,10 +72,6 @@ const handlePageChange = (type: 'prev' | 'next' | Event) => {
     emit('page-change', +(type.target as HTMLSelectElement).value);
   }
 };
-
-onMounted(() => {
-  emit('search');
-});
 </script>
 
 <template>
@@ -120,7 +125,7 @@ onMounted(() => {
           </ui-input>
         </div>
         <div class="m-2 w-full sm:w-auto">
-          <ui-select v-model:value="search.city" :options="cityOptions" class="w-full" @update:value="handleSearch" />
+          <ui-select v-model:value="search.city" :options="options" class="w-full" @update:value="handleSearch" />
         </div>
       </div>
     </div>

@@ -4,150 +4,70 @@ meta:
 </route>
 
 <script lang="ts" setup>
-import { useAppAction } from '/src/meta';
-import { useService } from '/src/utils/service';
-import { savedSearch, cityOptions } from '/src/utils/service/shared';
+import { MaybeRef } from '@vueuse/core';
+import { injectAppAction } from '/src/meta';
+import store, { GlobalQuery } from '/src/utils/service/store';
 
 const router = useRouter();
-const route = useRoute();
-const service = useService('Tourism');
-const summary = service.request('/ScenicSpot', {});
-const search = service.request('/ScenicSpot', {});
-const conditions = ref<string[]>([]);
-const pagination = ref({
-  page: 1,
-  size: 20
+const appAction = injectAppAction();
+
+const searchAttrs = computed(() => {
+  const { page, size, total, loading } = store.scenicSpot.state.value;
+  return {
+    loading,
+    total,
+    pagination: {
+      page,
+      size
+    }
+  };
 });
-const appAction = useAppAction();
-const detailId = computed(() => (route.query.id as string) || null);
 
-const reload = () => {
-  const { page, size } = pagination.value;
+const list = computed(() => unref(store.scenicSpot.state.value.data));
 
-  search.reload({
-    $top: size,
-    $skip: (page - 1) * size,
-    $filter: conditions.value.join(' and '),
-    $orderby: 'UpdateTime desc'
-  });
+const search = (query: MaybeRef<GlobalQuery>, page = 1) => {
+  const conditions: string[] = ['City ne null', 'Description ne null'];
+  const { keyword, city } = unref(query);
 
+  if (city) conditions.push(`City eq '${city}'`);
+  if (keyword) conditions.push(`contains(Name, '${keyword}')`);
+
+  store.scenicSpot.query(conditions, { page });
   appAction?.top();
 };
 
-const handleSearch = () => {
-  const { keyword, city } = unref(savedSearch);
-  const targetCity = city && cityOptions.find((item) => item.value === city)?.label;
-  conditions.value = ['City ne null', 'Description ne null'];
+const handleSearch = (query: MaybeRef<GlobalQuery>, page = 1) => search(query, page);
 
-  if (targetCity) conditions.value.push(`City eq '${targetCity}'`);
-  if (keyword) conditions.value.push(`contains(Name, '${keyword}')`);
-
-  summary.reload({ $select: 'ID', $filter: conditions.value.join(' and ') });
-  pagination.value.page = 1;
-  reload();
-};
-
-const handlePageChange = (page: number) => {
-  pagination.value.page = page;
-  reload();
-};
+const handlePageChange = (page: number) => search(store.global, page);
 
 const handleReadMore = (id?: string) => {
   appAction?.top(false);
-  router.push({ path: route.path, query: { id } });
+  router.push({ name: 'tourism-scenic-spot-id', params: { id } });
 };
+
+if (store.scenicSpot.state.value.immediate) {
+  handleSearch(store.global);
+}
 </script>
 
 <template>
-  <tourism-search
-    v-show="!detailId"
-    class="text-orange-200"
-    :loading="search.isFetching.value"
-    :total="summary.data.value?.length"
-    :pagination="pagination"
-    @search="handleSearch"
-    @page-change="handlePageChange"
-  >
+  <tourism-search class="text-orange-200" v-bind="searchAttrs" @search="handleSearch" @page-change="handlePageChange">
     <div class="flex flex-wrap items-stretch">
       <div
-        v-for="item of search.data?.value"
+        v-for="item of list"
         :key="item.ID"
         class="group w-full p-2 md:max-w-1/2 xl:max-w-1/3 2xl:max-w-1/4 select-none"
       >
-        <ui-card>
-          <template #header>
-            <div class="group relative h-50 overflow-hidden bg-true-gray-200 dark:bg-dark-50">
-              <img
-                v-if="item.Picture?.PictureUrl1"
-                class="
-                  min-w-full min-h-full
-                  transition
-                  duration-750
-                  object-center object-fill
-                  transform
-                  opacity-85
-                  pointer-events-none
-                  group-hover:scale-115 group-hover:opacity-100
-                "
-                :src="item.Picture?.PictureUrl1"
-                :alt="item.Picture?.PictureDescription1"
-              />
-              <div v-else class="flex justify-center items-center min-h-full text-2xl text-true-gray-500">暫無圖片</div>
-              <div
-                class="
-                  absolute
-                  z-1
-                  right-0
-                  bottom-0
-                  transition
-                  -translate-x-[25%] -translate-y-[25%]
-                  md:translate-y-[100%]
-                  duration-300
-                  transform
-                  group-hover:-translate-y-[25%]
-                "
-              >
-                <div
-                  class="
-                    inline-flex
-                    justify-center
-                    items-center
-                    w-12
-                    h-12
-                    rounded-1
-                    text-xl
-                    cursor-pointer
-                    bg-true-gray-100 bg-opacity-85
-                    hover:bg-opacity-100
-                    dark:bg-dark-200 dark:hover:bg-dark-100
-                  "
-                  @click="handleReadMore(item.ID)"
-                >
-                  <svg-entypo-location />
-                </div>
-              </div>
-            </div>
-          </template>
-          <h3 class="py-2 font-bold text-xl text-dark-900 dark:text-light-900" v-text="item.Name" />
-          <p
-            class="overflow-ellipsis line-clamp-3 text-base h-18 text-true-gray-600 dark:text-true-gray-400"
-            v-text="item.Description"
-          />
-          <template #footer>
-            <div class="p-4 pt-0">
-              <div class="inline-flex items-start">
-                <svg-carbon-location-filled class="flex-shrink-0 text-xl text-orange-400 dark:text-yellow-300" />
-                <div class="px-2 text-true-gray-500 dark:text-true-gray-300" v-text="item.City" />
-              </div>
-              <div class="inline-flex items-start">
-                <svg-bx-bxs-time-five class="flex-shrink-0 text-xl text-orange-400 dark:text-yellow-300" />
-                <div class="px-2 text-true-gray-500 dark:text-true-gray-300" v-text="item.OpenTime" />
-              </div>
-            </div>
-          </template>
-        </ui-card>
+        <photo-card
+          :src="item.Picture?.PictureUrl1"
+          :alt="item.Picture?.PictureDescription1"
+          :title="item.Name"
+          :description="item.Description"
+          :city="item.City"
+          :time="item.OpenTime"
+          @more="handleReadMore(item.ID)"
+        />
       </div>
     </div>
   </tourism-search>
-  <tourism-scenic-spot v-if="detailId" :id="detailId" @close="handleReadMore" />
 </template>

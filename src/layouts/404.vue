@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-const route = useRoute();
+import { injectRouteMeta } from '/src/meta';
+
+const meta = injectRouteMeta();
 const title = computed(() => {
-  return (route.meta.title as string) ?? 'Page Not Found';
+  return unref(meta?.title) || 'Page Not Found';
 });
 
 useHead({

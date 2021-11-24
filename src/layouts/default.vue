@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useRouteMeta } from '/src/meta';
+import { injectRouteMeta } from '/src/meta';
 
-const meta = useRouteMeta();
+const meta = injectRouteMeta();
 
 if (meta) {
   useHead({

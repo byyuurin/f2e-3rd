@@ -1,3 +1,9 @@
-import { InjectionKey } from 'vue';
+import { InjectionKey, inject, provide } from 'vue';
 
-export const defineInjectionKey = <T>() => Symbol() as InjectionKey<T>;
+export const defineInjection = <T>() => {
+  const key: InjectionKey<T> = Symbol();
+  return {
+    inject: () => inject(key),
+    provide: (value: T) => provide(key, value)
+  };
+};

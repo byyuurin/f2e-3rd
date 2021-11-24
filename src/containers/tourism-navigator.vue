@@ -4,18 +4,20 @@ import SvgIcon2 from '~icons/carbon/hotel';
 import SvgIcon3 from '~icons/fluent/food-16-filled';
 import SvgIcon4 from '~icons/fluent/shifts-activity-24-filled';
 
+const route = useRoute();
+
 const links = [
-  { icon: SvgIcon1, label: '旅遊景點', name: 'tourism-scenic-spot' },
-  { icon: SvgIcon2, label: '推薦旅宿', name: 'tourism-hotel' },
-  { icon: SvgIcon3, label: '美食饗宴', name: 'tourism-restaurant' },
-  { icon: SvgIcon4, label: '活動資訊', name: 'tourism-activity' }
+  { icon: SvgIcon1, label: '旅遊景點', name: 'tourism-scenic-spot', trigger: /\/scenic-spot\/?/ },
+  { icon: SvgIcon2, label: '推薦旅宿', name: 'tourism-hotel', trigger: /\/hotel\/?/ },
+  { icon: SvgIcon3, label: '美食饗宴', name: 'tourism-restaurant', trigger: /\/restaurant\/?/ },
+  { icon: SvgIcon4, label: '活動資訊', name: 'tourism-activity', trigger: /\/activit\/?/ }
 ];
 </script>
 
 <template>
   <div class="flex flex-wrap justify-between items-center p-2 px-3 text-center">
     <div v-for="link of links" :key="link.name" class="w-1/2 md:w-1/4 p-2">
-      <router-link :to="link">
+      <router-link :to="link" :class="{ 'is-active': link.trigger.test(route.path) }">
         <div class="h-15 leading-15 rounded-md bg-true-gray-200 bg-opacity-50 dark:bg-dark-100">
           <span class="pr-1 inline-block align-middle leading-none">
             <component :is="link.icon" class="text-2xl" />
@@ -28,7 +30,7 @@ const links = [
 </template>
 
 <style lang="postcss" scoped>
-.router-link-exact-active {
+.is-active {
   > div {
     @apply bg-yellow-200 dark:bg-dark-700;
   }

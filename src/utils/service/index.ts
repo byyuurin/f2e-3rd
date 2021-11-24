@@ -17,8 +17,8 @@ type ModuleParams<M extends ModuleName, P extends keyof Service[M]> = Service[M]
 // @ts-ignore
 type ModuleResult<M extends ModuleName, P extends keyof Service[M]> = Service[M][P]['entity'][];
 
-const repackUrl = (raw: string, params: Record<string, any>) => {
-  let url = raw;
+const createUrl = (base: string, params: Record<string, any>) => {
+  let url = base;
   const query: string[] = ['$format=JSON'];
 
   Object.keys(params).forEach((key) => {
@@ -46,7 +46,7 @@ export function useService<M extends ModuleName>(module: M) {
      */
     request: <P extends keyof Service[M]>(path: P, defaultParams: ModuleParams<M, P>) => {
       const fullPath = `${env.base}/${module}/${path}`;
-      const url = ref(repackUrl(fullPath, defaultParams));
+      const url = ref(createUrl(fullPath, defaultParams));
       const { data, execute, isFetching, onFetchError, onFetchFinally } = useFetch(url, {
         immediate: false,
         beforeFetch: ({ options }) => {
@@ -67,7 +67,7 @@ export function useService<M extends ModuleName>(module: M) {
         onFetchFinally,
         reload: (params: ModuleParams<M, P>) => {
           if (!isFetching.value) {
-            url.value = repackUrl(fullPath, { ...defaultParams, ...params });
+            url.value = createUrl(fullPath, { ...defaultParams, ...params });
             execute();
           }
         }

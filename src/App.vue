@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { injectRouteMeta, injectAppAction } from '/src/meta';
+import { provideRouteMeta, provideAppAction } from '/src/meta';
 
 const route = useRoute();
 
@@ -7,10 +7,13 @@ const title = computed(() => {
   return `${route.meta.title ?? ''}`;
 });
 
-injectRouteMeta({
+provideRouteMeta({
   title
 });
-injectAppAction();
+provideAppAction({
+  top: (animated = true) =>
+    document.querySelector('#app')?.scrollTo({ left: 0, top: 0, behavior: animated ? 'smooth' : 'auto' })
+});
 </script>
 
 <template>
