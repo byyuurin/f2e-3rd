@@ -1,0 +1,1 @@
+import{_ as t}from"./tourism-search.cd7e722d.js";import{_ as o}from"./plugin-vue_export-helper.5a098b48.js";import{o as r,c as s,w as a,G as c}from"./vendor.4a1ab756.js";import"./index.0b970818.js";import"./index.2fd07e63.js";const n={},_=c("Restaurant");function i(d,m){const e=t;return r(),s(e,{total:0},{default:a(()=>[_]),_:1})}var h=o(n,[["render",i]]);export{h as default};
