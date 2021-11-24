@@ -1,6 +1,6 @@
 import * as Entity from './entities';
 
-interface BaseRequestParams {
+export interface BaseRequestParams {
   /** 挑選 */
   $select?: string;
   /** 過濾 */

@@ -1,13 +1,14 @@
-import { Ref, ref, watch } from 'vue';
+import { Ref, ref, watchEffect } from 'vue';
 import { MaybeRef } from '@vueuse/core';
 import { useService } from './index';
+import { BaseRequestParams } from './interface';
 
 export interface GlobalQuery {
   keyword: string;
   city: string;
 }
 
-interface State<T> {
+interface State<T = any> {
   immediate: boolean;
   loading: boolean;
   page: number;
@@ -37,11 +38,62 @@ interface StoreModule<T> {
 
 const createModule = <T>(handler: () => StoreModule<T>) => handler();
 
+interface RequestOptions {
+  state: Ref<State>;
+  searchRequest: (params: BaseRequestParams) => void;
+  summaryRequest: (params: BaseRequestParams) => void;
+  conditions: string[];
+  queryOptions?: QueryOptions;
+  overwrite?: BaseRequestParams;
+}
+
 const createStore = () => {
   const global = ref<GlobalQuery>({
     keyword: '',
     city: ''
   });
+
+  const save = (state: Ref<State>, options: Required<QueryOptions>) => {
+    state.value.immediate = false;
+    state.value.page = options.page;
+    state.value.size = options.size;
+    global.value.keyword = options.keyword;
+    global.value.city = options.city;
+  };
+
+  const repack = (conditions: string[], queryOptions: QueryOptions = {}, overwrite: BaseRequestParams = {}) => {
+    const options = {
+      page: 1,
+      size: 20,
+      ...global.value,
+      ...queryOptions
+    };
+    const $filter = conditions.join(' and ');
+    const searchParams: BaseRequestParams = {
+      $top: options.size,
+      $skip: (options.page - 1) * options.size,
+      $filter,
+      ...overwrite
+    };
+    const summaryParams: BaseRequestParams = {
+      $filter
+    };
+
+    return { searchParams, summaryParams, options };
+  };
+
+  const request = (requestOptions: RequestOptions) => {
+    const { state, searchRequest, summaryRequest, conditions, queryOptions, overwrite } = requestOptions;
+    const { searchParams, summaryParams, options } = repack(conditions, queryOptions, overwrite);
+    searchRequest(searchParams);
+
+    if (options.page === 1) {
+      summaryRequest(summaryParams);
+    }
+
+    save(state, options);
+  };
+
   // 旅遊景點
   const scenicSpot = createModule(() => {
     const service = useService('Tourism');
@@ -49,46 +101,24 @@ const createStore = () => {
     const search = service.request('/ScenicSpot', {});
     const state = ref(defineState({ data: search.data }));
 
-    const save = (options: Required<QueryOptions>) => {
-      state.value.immediate = false;
-      state.value.page = options.page;
-      state.value.size = options.size;
-      global.value.keyword = options.keyword;
-      global.value.city = options.city;
-    };
-
-    watch(search.isFetching, (value) => {
-      state.value.loading = value;
-    });
-
-    watch(summary.data, (value) => {
-      state.value.total = value?.length ?? state.value.total;
+    watchEffect(() => {
+      state.value.loading = search.isFetching.value;
+      state.value.total = summary.data.value?.length ?? state.value.total;
     });
 
     return {
       state,
-      query: (conditions, queryOptions = {}) => {
-        const options = {
-          page: 1,
-          size: 20,
-          ...global.value,
-          ...queryOptions
-        };
-        const $filter = conditions.join(' and ');
-
-        search.reload({
-          $top: options.size,
-          $skip: (options.page - 1) * options.size,
-          $filter,
-          $orderby: 'UpdateTime desc'
-        });
-
-        if (options.page === 1) {
-          summary.reload({ $filter });
-        }
-
-        save(options);
-      }
+      query: (conditions, queryOptions = {}) =>
+        request({
+          state,
+          conditions,
+          queryOptions,
+          searchRequest: search.reload,
+          summaryRequest: summary.reload,
+          overwrite: {
+            $orderby: 'UpdateTime desc'
+          }
+        })
     };
   });
 
