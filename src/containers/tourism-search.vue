@@ -126,7 +126,7 @@ const handlePageChange = (page: number) => emit('page-change', page);
       <slot />
       <ui-pagination
         auto-hide
-        class="sticky z-5 bottom-0"
+        class="sticky z-2 bottom-0"
         :page="props.pagination.page"
         :size="props.pagination.size"
         :total="props.total"

@@ -74,11 +74,11 @@ const emit = defineEmits(['more']);
     />
     <template #footer>
       <div class="p-4 pt-0">
-        <div class="inline-flex items-start">
+        <div v-if="props.city" class="inline-flex items-start">
           <svg-carbon-location-filled class="flex-shrink-0 text-xl text-orange-400 dark:text-yellow-300" />
           <div class="px-2 text-true-gray-500 dark:text-true-gray-300" v-text="props.city" />
         </div>
-        <div class="inline-flex items-start">
+        <div v-if="props.time" class="inline-flex items-start">
           <svg-bx-bxs-time-five class="flex-shrink-0 text-xl text-orange-400 dark:text-yellow-300" />
           <div class="px-2 text-true-gray-500 dark:text-true-gray-300" v-text="props.time" />
         </div>

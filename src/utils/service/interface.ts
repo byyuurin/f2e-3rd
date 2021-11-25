@@ -36,22 +36,22 @@ export interface Service {
     '/ScenicSpot/{City}': ServiceRequest<'City', Entity.ScenicSpotTourismInfo>;
 
     // 取得所有觀光餐飲資料
-    '/Restaurant': ServiceRequest<BaseRequestParams>;
+    '/Restaurant': ServiceRequest<BaseRequestParams, Entity.RestaurantTourismInfo>;
 
     // 取得指定[縣市]觀光餐飲資料
-    '/Restaurant/{City}': ServiceRequest<'City'>;
+    '/Restaurant/{City}': ServiceRequest<'City', Entity.RestaurantTourismInfo>;
 
     // 取得所有觀光旅宿資料
-    '/Hotel': ServiceRequest<BaseRequestParams>;
+    '/Hotel': ServiceRequest<BaseRequestParams, Entity.HotelTourismInfo>;
 
     // 取得指定[縣市]觀光旅宿資料
-    '/Hotel/{City}': ServiceRequest<'City'>;
+    '/Hotel/{City}': ServiceRequest<'City', Entity.HotelTourismInfo>;
 
     // 取得所有觀光活動資料
-    '/Activity': ServiceRequest<BaseRequestParams>;
+    '/Activity': ServiceRequest<BaseRequestParams, Entity.ActivityTourismInfo>;
 
     // 取得指定[縣市]觀光活動資料
-    '/Activity/{City}': ServiceRequest<'City'>;
+    '/Activity/{City}': ServiceRequest<'City', Entity.ActivityTourismInfo>;
 
     // 取得台灣好行公車的動態定時資料(A1)
     '/Bus/RealTimeByFrequency/TaiwanTrip': ServiceRequest<BaseRequestParams>;

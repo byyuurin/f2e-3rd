@@ -35,17 +35,18 @@ const search = (query: MaybeRef<GlobalQuery>, page = 1) => {
   if (keyword) conditions.push(`contains(Name, '${keyword}')`);
 
   store.scenicSpot.query(conditions, { page });
+};
 
+const handleSearch = (query: MaybeRef<GlobalQuery>, page = 1) => search(query, page);
+
+const handlePageChange = (page: number) => {
+  search(store.global, page);
   const offsetParent = (wrapperRef.value?.offsetParent as HTMLDivElement)?.offsetTop;
   const offsetWrapper = wrapperRef.value?.offsetTop || 0;
   appAction?.top(true, {
     top: offsetParent + offsetWrapper - 52
   });
 };
-
-const handleSearch = (query: MaybeRef<GlobalQuery>, page = 1) => search(query, page);
-
-const handlePageChange = (page: number) => search(store.global, page);
 
 const handleReadMore = (id?: string) => {
   appAction?.top(false);
