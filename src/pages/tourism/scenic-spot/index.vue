@@ -36,8 +36,8 @@ const search = (query: MaybeRef<GlobalQuery>, page = 1) => {
 
   store.scenicSpot.query(conditions, { page });
 
-  const offsetParent = (wrapperRef.value!.offsetParent as HTMLDivElement).offsetTop;
-  const offsetWrapper = wrapperRef.value!.offsetTop;
+  const offsetParent = (wrapperRef.value?.offsetParent as HTMLDivElement)?.offsetTop;
+  const offsetWrapper = wrapperRef.value?.offsetTop || 0;
   appAction?.top(true, {
     top: offsetParent + offsetWrapper - 52
   });
