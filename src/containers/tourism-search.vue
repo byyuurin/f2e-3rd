@@ -51,27 +51,13 @@ watchEffect(() => {
   }
 });
 
-const maxPage = computed(() => Math.ceil(props.total / props.pagination.size));
-const canPrev = computed(() => props.pagination.page > 1);
-const canNext = computed(() => props.pagination.page < maxPage.value);
-
 const handleSearch = () => {
   const { keyword, city } = search.value;
   store.global.value = { keyword, city };
   emit('search', { keyword, city });
 };
 
-const handlePageChange = (type: 'prev' | 'next' | Event) => {
-  if (type === 'prev' && canPrev.value) {
-    emit('page-change', props.pagination.page - 1);
-  }
-  if (type === 'next' && canNext.value) {
-    emit('page-change', props.pagination.page + 1);
-  }
-  if (typeof type !== 'string') {
-    emit('page-change', +(type.target as HTMLSelectElement).value);
-  }
-};
+const handlePageChange = (page: number) => emit('page-change', page);
 </script>
 
 <template>
@@ -137,81 +123,14 @@ const handlePageChange = (type: 'prev' | 'next' | Event) => {
         共有<span class="px-2 text-yellow-300" v-text="props.total" />筆搜尋結果
       </div>
       <slot />
-      <div
-        v-show="maxPage > 1"
-        class="
-          sticky
-          z-5
-          bottom-0
-          flex
-          justify-center
-          items-center
-          p-2
-          py-4
-          text-center
-          children:mx-1
-          whitespace-nowrap
-          bg-light-50
-          dark:bg-dark-300
-        "
-      >
-        <ui-button class="text-small" :disabled="!canPrev" @click="handlePageChange('prev')">
-          <template #content>
-            <svg-il-arrow-left />
-          </template>
-        </ui-button>
-
-        <div
-          class="
-            relative
-            px-2
-            flex-shrink-0 flex
-            items-center
-            rounded-md
-            overflow-hidden
-            select-none
-            bg-true-gray-200 bg-opacity-50
-            dark:bg-dark-100
-            shadow-sm
-            dark:shadow-light-900
-          "
-        >
-          <select
-            :value="pagination.page"
-            class="
-              h-9
-              m-1
-              px-4
-              text-current text-center
-              outline-none
-              rounded-md
-              appearance-none
-              bg-light-50
-              dark:bg-dark-400
-            "
-            @change="handlePageChange($event)"
-          >
-            <option
-              v-for="page in maxPage"
-              :key="page"
-              class="bg-light-50 text-dark-900 dark:bg-dark-400 dark:text-true-gray-400"
-              :value="page"
-            >
-              {{ page }}
-            </option>
-          </select>
-          <svg-mdi-slash-forward />
-          <div class="px-2">
-            {{ maxPage }}
-          </div>
-        </div>
-
-        <ui-button class="text-small" :disabled="!canNext" @click="handlePageChange('next')">
-          <template #content>
-            <svg-il-arrow-right />
-          </template>
-        </ui-button>
-      </div>
+      <ui-pagination
+        auto-hide
+        class="sticky z-5 bottom-0"
+        :page="props.pagination.page"
+        :size="props.pagination.size"
+        :total="props.total"
+        @change-page="handlePageChange"
+      />
     </div>
   </div>
 </template>
