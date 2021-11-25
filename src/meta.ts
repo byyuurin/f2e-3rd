@@ -10,8 +10,13 @@ export const { inject: injectRouteMeta, provide: provideRouteMeta } = defineInje
 
 export const isDark = useDark();
 
+interface ActionTopOptions {
+  top?: number;
+  left?: number;
+}
+
 interface AppAction {
-  top: (animated?: boolean) => void;
+  top: (animated?: boolean, options?: ActionTopOptions) => void;
 }
 
 export const { inject: injectAppAction, provide: provideAppAction } = defineInjection<AppAction>();

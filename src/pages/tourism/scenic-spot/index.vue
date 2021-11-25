@@ -8,6 +8,8 @@ import { MaybeRef } from '@vueuse/core';
 import { injectAppAction } from '/src/meta';
 import store, { GlobalQuery } from '/src/utils/service/store';
 
+const wrapperRef = ref<HTMLDivElement>();
+
 const router = useRouter();
 const appAction = injectAppAction();
 
@@ -33,7 +35,12 @@ const search = (query: MaybeRef<GlobalQuery>, page = 1) => {
   if (keyword) conditions.push(`contains(Name, '${keyword}')`);
 
   store.scenicSpot.query(conditions, { page });
-  appAction?.top();
+
+  const offsetParent = (wrapperRef.value!.offsetParent as HTMLDivElement).offsetTop;
+  const offsetWrapper = wrapperRef.value!.offsetTop;
+  appAction?.top(true, {
+    top: offsetParent + offsetWrapper - 52
+  });
 };
 
 const handleSearch = (query: MaybeRef<GlobalQuery>, page = 1) => search(query, page);
@@ -51,8 +58,8 @@ if (store.scenicSpot.state.value.immediate) {
 </script>
 
 <template>
-  <tourism-search class="text-orange-200" v-bind="searchAttrs" @search="handleSearch" @page-change="handlePageChange">
-    <div class="flex flex-wrap items-stretch">
+  <tourism-search v-bind="searchAttrs" class="text-orange-200" @search="handleSearch" @page-change="handlePageChange">
+    <div ref="wrapperRef" class="flex flex-wrap items-stretch">
       <div
         v-for="item of list"
         :key="item.ID"
