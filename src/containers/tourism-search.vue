@@ -2,16 +2,6 @@
 import { cityOptions } from '/src/utils/service/config';
 import store, { GlobalQuery } from '/src/utils/service/store';
 
-const options = cityOptions.map((option) => {
-  if (!option.value) {
-    return option;
-  }
-  return {
-    label: option.label,
-    value: option.label
-  };
-});
-
 interface Props {
   loading?: boolean;
   total?: number;
@@ -33,6 +23,17 @@ const emit = defineEmits<{
 }>();
 
 const route = useRoute();
+
+// 因為自動切換 api 還沒想到解法, 先作為關鍵字查詢
+const options = cityOptions.map((option) => {
+  if (!option.value) {
+    return option;
+  }
+  return {
+    label: option.label,
+    value: option.label
+  };
+});
 
 const search = ref({
   module: route.path.replace(/\/tourism\//, ''),
