@@ -1,1 +1,0 @@
-import{_ as e}from"./plugin-vue_export-helper.5a098b48.js";import{o as r,m as t}from"./vendor.2a1c2e1a.js";const a={},o={class:"p-4 m-auto max-w-screen-2xl text-true-gray-600 dark:text-true-gray-400"};function c(s,_){return r(),t("div",o,"TODO")}var p=e(a,[["render",c]]);export{p as default};
