@@ -6,26 +6,20 @@ meta:
 <script lang="ts" setup>
 import { MaybeRef } from '@vueuse/core';
 import { injectAppAction } from '/src/meta';
-import store, { GlobalQuery } from '/src/utils/service/store';
+import { GlobalQuery, injectStore } from '/src/utils/service/store';
 
+const store = injectStore()!;
 const wrapperRef = ref<HTMLDivElement>();
-
 const router = useRouter();
 const appAction = injectAppAction();
-
-const searchAttrs = computed(() => {
-  const { page, size, total, loading } = store.restaurant.state.value;
+const data = computed(() => {
   return {
-    loading,
-    total,
-    pagination: {
-      page,
-      size
-    }
+    isLoading: unref(store.restaurant.isLoading),
+    state: unref(store.restaurant.state),
+    items: unref(store.restaurant.data),
+    total: unref(store.restaurant.total)
   };
 });
-
-const list = computed(() => unref(store.restaurant.state.value.data));
 
 const search = (query: MaybeRef<GlobalQuery>, page = 1) => {
   const conditions: string[] = ['City ne null', 'Description ne null'];
@@ -59,10 +53,17 @@ if (store.restaurant.state.value.immediate) {
 </script>
 
 <template>
-  <tourism-search v-bind="searchAttrs" class="text-orange-200" @search="handleSearch" @page-change="handlePageChange">
+  <tourism-search
+    :loading="data.isLoading"
+    :total="data.total"
+    :pagination="{ page: data.state.page, size: data.state.size }"
+    class="text-orange-200"
+    @search="handleSearch"
+    @page-change="handlePageChange"
+  >
     <div ref="wrapperRef" class="flex flex-wrap items-stretch">
       <div
-        v-for="item of list"
+        v-for="item of data.items"
         :key="item.ID"
         class="group w-full p-2 md:max-w-1/2 xl:max-w-1/3 2xl:max-w-1/4 select-none"
       >

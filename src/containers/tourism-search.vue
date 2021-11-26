@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { cityOptions } from '/src/utils/service/config';
-import store, { GlobalQuery } from '/src/utils/service/store';
+import { GlobalQuery, injectStore } from '/src/utils/service/store';
 
 interface Props {
   loading?: boolean;
@@ -22,6 +22,7 @@ const emit = defineEmits<{
   (event: 'page-change', page: number): void;
 }>();
 
+const store = injectStore()!;
 const route = useRoute();
 
 // 因為自動切換 api 還沒想到解法, 先作為關鍵字查詢
@@ -64,19 +65,7 @@ const handlePageChange = (page: number) => emit('page-change', page);
 <template>
   <div class="with-overlay" :class="{ 'is-active': isOverlayVisible }">
     <div
-      class="
-        m-2
-        mx-5
-        p-4
-        py-18
-        text-center
-        rounded-md
-        select-none
-        bg-gradient-to-br
-        from-yellow-200
-        to-light-100
-        dark:from-indigo-700 dark:to-violet-500
-      "
+      class="m-2 mx-5 p-4 py-18 text-center rounded-md select-none bg-gradient-to-br from-yellow-200 to-light-100 dark:from-indigo-700 dark:to-violet-500"
     >
       <div class="py-4 text-4xl">
         <span class="text-violet-700 dark:text-yellow-300">探索</span>
@@ -91,19 +80,7 @@ const handlePageChange = (page: number) => emit('page-change', page);
           <ui-input v-model:value="search.keyword" class="w-full" placeholder="搜尋關鍵字">
             <template #suffix>
               <div
-                class="
-                  inline-flex
-                  justify-center
-                  items-center
-                  h-8
-                  w-8
-                  rounded-md
-                  text-light-50
-                  bg-gradient-to-br
-                  from-yellow-400
-                  to-yellow-500
-                  cursor-pointer
-                "
+                class="inline-flex justify-center items-center h-8 w-8 rounded-md text-light-50 bg-gradient-to-br from-yellow-400 to-yellow-500 cursor-pointer"
                 @click="handleSearch"
               >
                 <svg-jam-search />

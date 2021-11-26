@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { provideRouteMeta, provideAppAction } from '/src/meta';
+import { createStore, provideStore } from '/src/utils/service/store';
 
 const route = useRoute();
 
@@ -14,6 +15,7 @@ provideAppAction({
   top: (animated = true, options = { left: 0, top: 0 }) =>
     document.querySelector('#app')?.scrollTo({ ...options, behavior: animated ? 'smooth' : 'auto' })
 });
+provideStore(createStore());
 </script>
 
 <template>

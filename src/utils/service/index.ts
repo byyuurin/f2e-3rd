@@ -17,25 +17,25 @@ type ModuleParams<M extends ModuleName, P extends keyof Service[M]> = Service[M]
 // @ts-ignore
 type ModuleResult<M extends ModuleName, P extends keyof Service[M]> = Service[M][P]['entity'][];
 
-const createUrl = (base: string, params: Record<string, any>) => {
-  let url = base;
-  const query: string[] = ['$format=JSON'];
-
-  Object.keys(params).forEach((key) => {
-    if (/\$.*/.test(key) && params[key]) {
-      query.push(`${key}=${params[key]}`);
-    } else {
-      url = url.replace(`{${key}}`, params[key]);
-    }
-  });
-  return `${url}?${query.join('&')}`;
-};
-
 export function useService<M extends ModuleName>(module: M) {
   const env = {
     base: import.meta.env.VITE_API_BASE,
     key: import.meta.env.VITE_API_KEY,
     id: import.meta.env.VITE_API_ID
+  };
+
+  const createUrl = (base: string, params: Record<string, any>) => {
+    let url = base;
+    const query: string[] = ['$format=JSON'];
+
+    Object.keys(params).forEach((key) => {
+      if (/\$.*/.test(key) && params[key]) {
+        query.push(`${key}=${params[key]}`);
+      } else {
+        url = url.replace(`{${key}}`, params[key]);
+      }
+    });
+    return `${url}?${query.join('&')}`;
   };
 
   return {
@@ -47,7 +47,7 @@ export function useService<M extends ModuleName>(module: M) {
     request: <P extends keyof Service[M]>(path: P, defaultParams: ModuleParams<M, P>) => {
       const fullPath = `${env.base}/${module}/${path}`;
       const url = ref(createUrl(fullPath, defaultParams));
-      const { data, execute, isFetching, onFetchError, onFetchFinally } = useFetch(url, {
+      const instance = useFetch(url, {
         immediate: false,
         beforeFetch: ({ options }) => {
           options.headers = {
@@ -60,15 +60,11 @@ export function useService<M extends ModuleName>(module: M) {
         }
       }).json<ModuleResult<M, P>>();
       return {
-        data,
-        execute,
-        isFetching,
-        onFetchError,
-        onFetchFinally,
+        ...instance,
         reload: (params: ModuleParams<M, P>) => {
-          if (!isFetching.value) {
+          if (!instance.isFetching.value) {
             url.value = createUrl(fullPath, { ...defaultParams, ...params });
-            execute();
+            instance.execute();
           }
         }
       };

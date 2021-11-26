@@ -54,16 +54,7 @@ const mapUrl = computed(() => {
         />
         <div
           v-else
-          class="
-            flex
-            justify-center
-            items-center
-            min-h-full
-            rounded-md
-            text-2xl text-true-gray-500
-            bg-true-gray-200
-            dark:bg-dark-50
-          "
+          class="flex justify-center items-center min-h-120 rounded-md text-2xl text-true-gray-500 bg-true-gray-200 dark:bg-dark-50"
         >
           暫無圖片
         </div>
@@ -71,19 +62,7 @@ const mapUrl = computed(() => {
       <div class="w-full flex flex-col py-4 md:w-1/2">
         <p class="flex-grow text-base md:px-4" v-text="data?.DescriptionDetail || data?.Description" />
         <div
-          class="
-            flex flex-wrap
-            mt-4
-            md:mx-4
-            px-4
-            py-2
-            shadow-md
-            text-true-gray-600
-            dark:text-true-gray-300
-            bg-true-gray-100
-            dark:bg-dark-100
-            rounded-sm
-          "
+          class="flex flex-wrap mt-4 md:mx-4 px-4 py-2 shadow-md text-true-gray-600 dark:text-true-gray-300 bg-true-gray-100 dark:bg-dark-100 rounded-sm"
         >
           <div v-show="data?.Address" class="flex items-center py-2 <sm:w-full sm:min-w-1/2">
             <svg-carbon-location-filled class="flex-shrink-0 text-xl text-orange-400 dark:text-yellow-300" />

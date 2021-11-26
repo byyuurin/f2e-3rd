@@ -1,28 +1,18 @@
-import { Ref, ref, computed, watch, watchEffect } from 'vue';
-import { MaybeRef } from '@vueuse/core';
+import { Ref, ComputedRef, ref, computed, watch } from 'vue';
 import { useService } from './index';
 import { BaseRequestParams } from './interface';
+import { defineInjection } from '/src/utils/shorthands';
 
 export interface GlobalQuery {
   keyword: string;
   city: string;
 }
 
-interface State<T = any> {
+interface State {
   immediate: boolean;
-  loading: boolean;
   page: number;
   size: number;
-  total: number;
-  data: MaybeRef<T[] | null>;
 }
-
-type StateOptions<T> = Partial<Omit<State<T>, 'data'>> & { data: Ref<T[] | null> };
-
-const defineState = <T>(options: StateOptions<T>) => {
-  const state: State<T> = { immediate: true, loading: false, page: 1, size: 20, total: 0, ...options };
-  return state;
-};
 
 interface QueryOptions {
   keyword?: string;
@@ -32,7 +22,10 @@ interface QueryOptions {
 }
 
 interface StoreModule<T> {
-  readonly state: Ref<State<T>>;
+  state: Ref<State>;
+  isLoading: ComputedRef<boolean>;
+  total: ComputedRef<number>;
+  data: Ref<T[] | null>;
   query: (conditions: string[], queryOptions?: QueryOptions) => void;
 }
 
@@ -45,7 +38,7 @@ interface RequestOptions {
   overwrite?: BaseRequestParams;
 }
 
-const createStore = () => {
+export const createStore = () => {
   const moduleKey = ref('');
   const modules: Record<string, Ref<State>> = {};
   const global = ref<GlobalQuery>({
@@ -55,11 +48,10 @@ const createStore = () => {
 
   const register = <T>(key: string, generator: () => StoreModule<T>) => {
     const module = generator();
-    const data = computed(() => module.state.value.data);
 
     modules[key] = module.state;
 
-    watch(data, () => {
+    watch(module.data, () => {
       moduleKey.value = key;
     });
 
@@ -118,15 +110,13 @@ const createStore = () => {
     const service = useService('Tourism');
     const summary = service.request('/ScenicSpot', { $select: 'ID' });
     const search = service.request('/ScenicSpot', {});
-    const state = ref(defineState({ data: search.data }));
-
-    watchEffect(() => {
-      state.value.loading = search.isFetching.value;
-      state.value.total = summary.data.value?.length ?? state.value.total;
-    });
+    const state = ref({ immediate: true, page: 1, size: 20 });
 
     return {
       state,
+      isLoading: computed(() => search.isFetching.value || summary.isFetching.value || false),
+      total: computed(() => summary.data.value?.length || 0),
+      data: search.data,
       query: (conditions, queryOptions = {}) =>
         request({
           state,
@@ -146,15 +136,13 @@ const createStore = () => {
     const service = useService('Tourism');
     const summary = service.request('/Restaurant', { $select: 'ID' });
     const search = service.request('/Restaurant', {});
-    const state = ref(defineState({ data: search.data }));
-
-    watchEffect(() => {
-      state.value.loading = search.isFetching.value;
-      state.value.total = summary.data.value?.length ?? state.value.total;
-    });
+    const state = ref({ immediate: true, page: 1, size: 20 });
 
     return {
       state,
+      isLoading: computed(() => search.isFetching.value || summary.isFetching.value || false),
+      total: computed(() => summary.data.value?.length || 0),
+      data: search.data,
       query: (conditions, queryOptions = {}) =>
         request({
           state,
@@ -174,15 +162,13 @@ const createStore = () => {
     const service = useService('Tourism');
     const summary = service.request('/Hotel', { $select: 'ID' });
     const search = service.request('/Hotel', {});
-    const state = ref(defineState({ data: search.data }));
-
-    watchEffect(() => {
-      state.value.loading = search.isFetching.value;
-      state.value.total = summary.data.value?.length ?? state.value.total;
-    });
+    const state = ref({ immediate: true, page: 1, size: 20 });
 
     return {
       state,
+      isLoading: computed(() => search.isFetching.value || summary.isFetching.value || false),
+      total: computed(() => summary.data.value?.length || 0),
+      data: search.data,
       query: (conditions, queryOptions = {}) =>
         request({
           state,
@@ -202,15 +188,13 @@ const createStore = () => {
     const service = useService('Tourism');
     const summary = service.request('/Activity', { $select: 'ID' });
     const search = service.request('/Activity', {});
-    const state = ref(defineState({ data: search.data }));
-
-    watchEffect(() => {
-      state.value.loading = search.isFetching.value;
-      state.value.total = summary.data.value?.length ?? state.value.total;
-    });
+    const state = ref({ immediate: true, page: 1, size: 20 });
 
     return {
       state,
+      isLoading: computed(() => search.isFetching.value || summary.isFetching.value || false),
+      total: computed(() => summary.data.value?.length || 0),
+      data: search.data,
       query: (conditions, queryOptions = {}) =>
         request({
           state,
@@ -234,4 +218,6 @@ const createStore = () => {
   };
 };
 
-export default createStore();
+type Store = ReturnType<typeof createStore>;
+
+export const { inject: injectStore, provide: provideStore } = defineInjection<Store>();
