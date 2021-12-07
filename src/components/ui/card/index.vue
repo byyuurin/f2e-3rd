@@ -1,5 +1,5 @@
 <script lang="ts">
-export default { name: 'UiCard' };
+export default { name: 'UiCard' }
 </script>
 
 <script lang="ts" setup></script>

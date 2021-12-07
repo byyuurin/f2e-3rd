@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { injectRouteMeta } from '/src/meta';
+import { injectRouteMeta } from '/src/meta'
 
-const meta = injectRouteMeta();
+const meta = injectRouteMeta()
 const title = computed(() => {
-  return unref(meta?.title) || 'Page Not Found';
-});
+  return unref(meta?.title) || 'Page Not Found'
+})
 
 useHead({
   title
-});
+})
 </script>
 
 <template>

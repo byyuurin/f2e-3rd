@@ -1,65 +1,65 @@
 <script lang="ts" setup>
-import { cityOptions } from '/src/utils/service/config';
-import { GlobalQuery, injectStore } from '/src/utils/service/store';
+import { cityOptions } from '/src/utils/service/config'
+import { GlobalQuery, injectStore } from '/src/utils/service/store'
 
 interface Props {
-  loading?: boolean;
-  total?: number;
+  loading?: boolean
+  total?: number
   pagination?: {
-    page: number;
-    size: number;
-  };
+    page: number
+    size: number
+  }
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
   total: 0,
   pagination: () => ({ page: 1, size: 10 })
-});
+})
 
 const emit = defineEmits<{
-  (event: 'search', payload: GlobalQuery): void;
-  (event: 'page-change', page: number): void;
-}>();
+  (event: 'search', payload: GlobalQuery): void
+  (event: 'page-change', page: number): void
+}>()
 
-const store = injectStore()!;
-const route = useRoute();
+const store = injectStore()!
+const route = useRoute()
 
 // 因為自動切換 api 還沒想到解法, 先作為關鍵字查詢
 const options = cityOptions.map((option) => {
   if (!option.value) {
-    return option;
+    return option
   }
   return {
     label: option.label,
     value: option.label
-  };
-});
+  }
+})
 
 const search = ref({
   module: route.path.replace(/\/tourism\//, ''),
   ...unref(store.global)
-});
+})
 
-const isOverlayVisible = ref(false);
+const isOverlayVisible = ref(false)
 
 watchEffect(() => {
   if (props.loading) {
-    isOverlayVisible.value = true;
+    isOverlayVisible.value = true
   } else {
     setTimeout(() => {
-      isOverlayVisible.value = false;
-    }, 250);
+      isOverlayVisible.value = false
+    }, 250)
   }
-});
+})
 
 const handleSearch = () => {
-  const { keyword, city } = search.value;
-  store.global.value = { keyword, city };
-  emit('search', { keyword, city });
-};
+  const { keyword, city } = search.value
+  store.global.value = { keyword, city }
+  emit('search', { keyword, city })
+}
 
-const handlePageChange = (page: number) => emit('page-change', page);
+const handlePageChange = (page: number) => emit('page-change', page)
 </script>
 
 <template>

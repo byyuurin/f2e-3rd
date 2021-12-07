@@ -1,20 +1,20 @@
 <script lang="ts">
-export default { name: 'UiSelect' };
+export default { name: 'UiSelect' }
 </script>
 
 <script lang="ts" setup>
-import { UiSelectOption } from './types';
-import { InputSize, inputFontSize, inputHeight } from '../_shared';
+import { UiSelectOption } from './types'
+import { InputSize, inputFontSize, inputHeight } from '../_shared'
 
 interface Props {
-  size?: InputSize;
-  value: string | number;
-  options: UiSelectOption[];
+  size?: InputSize
+  value: string | number
+  options: UiSelectOption[]
 }
 
-const props = withDefaults(defineProps<Props>(), { size: 'medium' });
+const props = withDefaults(defineProps<Props>(), { size: 'medium' })
 
-const innerValue = useVModel(props, 'value');
+const innerValue = useVModel(props, 'value')
 
 const innerStyle = computed(() => {
   const classList = [
@@ -28,11 +28,11 @@ const innerStyle = computed(() => {
     'outline-none',
     'appearance-none',
     'cursor-pointer'
-  ];
-  classList.push(inputFontSize[props.size]);
-  classList.push(inputHeight[props.size]);
-  return classList;
-});
+  ]
+  classList.push(inputFontSize[props.size])
+  classList.push(inputHeight[props.size])
+  return classList
+})
 </script>
 
 <template>

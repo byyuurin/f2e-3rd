@@ -1,2 +1,2 @@
-import UiButton from './index.vue';
-export default UiButton;
+import UiButton from './index.vue'
+export default UiButton

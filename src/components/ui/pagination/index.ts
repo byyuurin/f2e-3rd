@@ -1,2 +1,2 @@
-import UiPagination from './index.vue';
-export default UiPagination;
+import UiPagination from './index.vue'
+export default UiPagination

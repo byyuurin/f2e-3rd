@@ -1,2 +1,2 @@
-import UiInput from './index.vue';
-export default UiInput;
+import UiInput from './index.vue'
+export default UiInput

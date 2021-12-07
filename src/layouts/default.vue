@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { injectRouteMeta } from '/src/meta';
+import { injectRouteMeta } from '/src/meta'
 
-const meta = injectRouteMeta();
+const meta = injectRouteMeta()
 
 if (meta) {
   useHead({
     title: meta.title
-  });
+  })
 }
 </script>
 

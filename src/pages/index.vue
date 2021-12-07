@@ -4,9 +4,9 @@ meta:
 </route>
 
 <script lang="ts" setup>
-const router = useRouter();
+const router = useRouter()
 // TODO: 活動主題頁, 提供三週頁面連結
-router.replace({ name: 'tourism-scenic-spot' });
+router.replace({ name: 'tourism-scenic-spot' })
 </script>
 
 <template>

@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script lang="ts" setup>
-import { isDark } from '/src/meta';
+import { isDark } from '/src/meta'
 </script>
 
 <template>

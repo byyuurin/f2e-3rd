@@ -1,2 +1,2 @@
-import UiSelect from './index.vue';
-export default UiSelect;
+import UiSelect from './index.vue'
+export default UiSelect

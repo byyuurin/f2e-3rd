@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-import SvgIcon1 from '~icons/ic/sharp-mode-of-travel';
-import SvgIcon2 from '~icons/carbon/hotel';
-import SvgIcon3 from '~icons/fluent/food-16-filled';
-import SvgIcon4 from '~icons/fluent/shifts-activity-24-filled';
+import SvgIcon1 from '~icons/ic/sharp-mode-of-travel'
+import SvgIcon2 from '~icons/carbon/hotel'
+import SvgIcon3 from '~icons/fluent/food-16-filled'
+import SvgIcon4 from '~icons/fluent/shifts-activity-24-filled'
 
-const route = useRoute();
+const route = useRoute()
 
 const links = [
   { icon: SvgIcon1, label: '旅遊景點', name: 'tourism-scenic-spot', trigger: /\/scenic-spot\/?/ },
   { icon: SvgIcon2, label: '推薦旅宿', name: 'tourism-hotel', trigger: /\/hotel\/?/ },
   { icon: SvgIcon3, label: '美食饗宴', name: 'tourism-restaurant', trigger: /\/restaurant\/?/ },
   { icon: SvgIcon4, label: '活動資訊', name: 'tourism-activity', trigger: /\/activit\/?/ }
-];
+]
 </script>
 
 <template>

@@ -1,3 +1,3 @@
-import 'virtual:windi.css';
-import './src/styles/main.css';
-import './src/main';
+import 'virtual:windi.css'
+import './src/styles/main.css'
+import './src/main'

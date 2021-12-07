@@ -1,14 +1,14 @@
 <script lang="ts">
-export default { name: 'DarkToggle' };
+export default { name: 'DarkToggle' }
 </script>
 
 <script lang="ts" setup>
 interface Props {
-  modelValue: boolean;
+  modelValue: boolean
 }
-const props = withDefaults(defineProps<Props>(), { modelValue: true });
-const value = useVModel(props, 'modelValue');
-const handleToggle = () => useToggle(value)();
+const props = withDefaults(defineProps<Props>(), { modelValue: true })
+const value = useVModel(props, 'modelValue')
+const handleToggle = () => useToggle(value)()
 </script>
 
 <template>

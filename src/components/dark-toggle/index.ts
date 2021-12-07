@@ -1,2 +1,2 @@
-import DarkToggle from './index.vue';
-export default DarkToggle;
+import DarkToggle from './index.vue'
+export default DarkToggle

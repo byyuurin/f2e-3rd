@@ -4,13 +4,13 @@ meta:
 </route>
 
 <script lang="ts" setup>
-import { useRoute, useRouter } from 'vue-router';
-const route = useRoute();
-const router = useRouter();
-const regex = /\/index\.(htm|html)$/i;
+import { useRoute, useRouter } from 'vue-router'
+const route = useRoute()
+const router = useRouter()
+const regex = /\/index\.(htm|html)$/i
 
 if (regex.test(route.path)) {
-  router.replace('/');
+  router.replace('/')
 }
 </script>
 

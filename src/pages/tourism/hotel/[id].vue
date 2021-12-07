@@ -1,36 +1,36 @@
 <script lang="ts" setup>
-import { useService } from '/src/utils/service';
-import { injectRouteMeta } from '/src/meta';
+import { useService } from '/src/utils/service'
+import { injectRouteMeta } from '/src/meta'
 
-const meta = injectRouteMeta();
-const title = ref(unref(meta?.title) || '');
-const rootName = 'tourism-hotel';
-const router = useRouter();
-const route = useRoute();
-const service = useService('Tourism');
-const search = service.request('/Hotel', { $top: 1, $filter: `ID eq '${route.params.id}'` });
+const meta = injectRouteMeta()
+const title = ref(unref(meta?.title) || '')
+const rootName = 'tourism-hotel'
+const router = useRouter()
+const route = useRoute()
+const service = useService('Tourism')
+const search = service.request('/Hotel', { $top: 1, $filter: `ID eq '${route.params.id}'` })
 
-useHead({ title });
+useHead({ title })
 
 search.onFetchFinally(() => {
   if (!search.data.value?.length) {
-    router.replace({ name: rootName });
+    router.replace({ name: rootName })
   } else {
-    title.value = `${search.data.value[0].Name} - 台灣旅遊景點導覽`;
+    title.value = `${search.data.value[0].Name} - 台灣旅遊景點導覽`
   }
-});
+})
 
-search.execute();
+search.execute()
 
-const data = computed(() => search.data.value && search.data.value[0]);
+const data = computed(() => search.data.value && search.data.value[0])
 
 const mapUrl = computed(() => {
   if (!data.value) {
-    return null;
+    return null
   }
-  const { PositionLat, PositionLon } = data.value.Position || {};
-  return `https://maps.google.com/maps?q=${PositionLat},${PositionLon}&z=18&ie=UTF8&output=embed`;
-});
+  const { PositionLat, PositionLon } = data.value.Position || {}
+  return `https://maps.google.com/maps?q=${PositionLat},${PositionLon}&z=18&ie=UTF8&output=embed`
+})
 </script>
 
 <template>

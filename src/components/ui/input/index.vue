@@ -1,27 +1,27 @@
 <script lang="ts">
-export default { name: 'UiInput' };
+export default { name: 'UiInput' }
 </script>
 
 <script lang="ts" setup>
-import { InputSize, inputFontSize, inputHeight } from '../_shared';
+import { InputSize, inputFontSize, inputHeight } from '../_shared'
 
 interface Props {
-  type?: 'text' | 'password' | 'number';
-  size?: InputSize;
-  value: string | number;
-  placeholder?: string;
+  type?: 'text' | 'password' | 'number'
+  size?: InputSize
+  value: string | number
+  placeholder?: string
 }
 
-const props = withDefaults(defineProps<Props>(), { type: 'text', size: 'medium', placeholder: '' });
+const props = withDefaults(defineProps<Props>(), { type: 'text', size: 'medium', placeholder: '' })
 
-const innerValue = useVModel(props, 'value');
+const innerValue = useVModel(props, 'value')
 
 const innerStyle = computed(() => {
-  const classList = ['flex-grow', 'px-3', 'truncate', 'text-current', 'bg-transparent', 'outline-none'];
-  classList.push(inputFontSize[props.size]);
-  classList.push(inputHeight[props.size]);
-  return classList;
-});
+  const classList = ['flex-grow', 'px-3', 'truncate', 'text-current', 'bg-transparent', 'outline-none']
+  classList.push(inputFontSize[props.size])
+  classList.push(inputHeight[props.size])
+  return classList
+})
 </script>
 
 <template>
