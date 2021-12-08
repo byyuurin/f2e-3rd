@@ -19,6 +19,10 @@ export const createAuthorization = (options: AuthorizationOptions) => {
   sha.update(`x-date: ${timeGMT}`)
   attrs.push(`signature="${sha.getHMAC('B64')}"`)
 
+  if (!options.id || !options.key) {
+    console.warn('[createAuthorization]: Invalid authorization options')
+  }
+
   return {
     Authorization: attrs.join(', '),
     'X-Date': timeGMT

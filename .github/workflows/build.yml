@@ -37,6 +37,9 @@ jobs:
         run: |
           pnpm install
           pnpm dist:gh-pages
+        env:
+          VITE_API_ID: ${{ secrets.VITE_API_ID }}
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
 
       - name: Create 404.html
         run: cp dist/index.html dist/404.html
