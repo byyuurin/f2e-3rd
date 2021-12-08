@@ -9,7 +9,7 @@
     "dist:gh-pages": "vite build --base=/f2e-3rd",
     "serve": "vite preview",
     "lint": "eslint \"**/*.{vue,ts,js}\"",
-    "lint-fix": "eslint \"**/*.{vue,ts,js}\" --fix"
+    "lint:fix": "eslint \"**/*.{vue,ts,js}\" --fix"
   },
   "dependencies": {
     "@vueuse/core": "^6.9.2",
