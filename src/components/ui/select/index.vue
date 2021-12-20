@@ -36,12 +36,22 @@ const innerStyle = computed(() => {
 </script>
 
 <template>
-  <div class="group relative inline-flex items-center bg-white overflow-hidden rounded-md shadow-md">
-    <select v-model="innerValue" :class="innerStyle">
-      <option v-for="option of props.options" :key="option.value" :value="option.value" v-text="option.label" />
-    </select>
-    <span class="absolute top-[50%] right-0 transform -translate-x-[50%] -translate-y-[50%] inline-flex items-center">
-      <svg-ic-round-arrow-drop-down />
-    </span>
+  <div class="inline-block text-dark-700 overflow-hidden rounded-md shadow-md">
+    <div class="group relative flex items-center bg-white">
+      <select v-model="innerValue" :class="innerStyle">
+        <option
+          v-for="option of props.options"
+          :key="option.value"
+          class="before:content-aa"
+          :value="option.value"
+          v-text="option.label"
+        />
+      </select>
+      <span
+        class="absolute top-[50%] right-0 transform -translate-x-[50%] -translate-y-[50%] inline-flex items-center pointer-events-none"
+      >
+        <svg-ic-round-arrow-drop-down />
+      </span>
+    </div>
   </div>
 </template>

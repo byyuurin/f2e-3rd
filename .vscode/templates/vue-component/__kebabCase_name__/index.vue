@@ -1,5 +1,5 @@
 <script lang="ts">
-export default { name: '{{pascalCase name}}' };
+export default { name: '{{pascalCase name}}' }
 </script>
 
 <script lang="ts" setup>
