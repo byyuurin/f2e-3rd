@@ -32,6 +32,9 @@ watchEffect(() => {
 
 <template>
   <div class="relative w-full pb-[50%]">
-    <div ref="chartRef" class="absolute top-0 left-0 right-0 bottom-0 overflow-hidden text-current" />
+    <div
+      ref="chartRef"
+      class="absolute top-0 left-0 right-0 bottom-0 overflow-hidden text-current text-sm sm:text-base xl:text-xl"
+    />
   </div>
 </template>

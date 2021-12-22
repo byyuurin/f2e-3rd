@@ -17,7 +17,8 @@ export const pie = createChartHelper<Record<string, number>, HelperOptions>(
       orient: 'vertical',
       top: 'center',
       textStyle: {
-        color: 'inherit'
+        color: 'inherit',
+        fontSize: '1em'
       }
     },
     series: []
@@ -41,6 +42,7 @@ export const pie = createChartHelper<Record<string, number>, HelperOptions>(
               borderWidth: 2
             },
             label: {
+              show: false,
               position: 'inner'
             },
             data: Object.keys(values).map((key) => {
@@ -50,10 +52,6 @@ export const pie = createChartHelper<Record<string, number>, HelperOptions>(
               }
             }),
             emphasis: {
-              label: {
-                fontSize: '1.5em',
-                fontWeight: 'bold'
-              },
               itemStyle: {
                 shadowBlur: 10,
                 shadowOffsetX: 0,
