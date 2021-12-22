@@ -7,6 +7,9 @@ interface HelperOptions {
 
 export const line = createChartHelper<any, HelperOptions>(
   {
+    grid: {
+      containLabel: false
+    },
     title: {
       left: 'center'
     },
@@ -40,10 +43,15 @@ export const line = createChartHelper<any, HelperOptions>(
           {
             name: options.dataTitle,
             type: 'bar',
+            barMaxWidth: 50,
+            itemStyle: {
+              borderRadius: [0, 4, 4, 0]
+            },
             label: {
               show: true,
               formatter: ` {b}`,
-              position: 'insideLeft'
+              position: 'insideLeft',
+              fontSize: '1em'
             },
             data: labels.map((key) => values[key])
           }
