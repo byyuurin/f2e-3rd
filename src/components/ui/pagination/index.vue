@@ -49,7 +49,7 @@ const handlePageChange = (value: number | Event) => {
     </ui-button>
 
     <div
-      class="relative px-2 flex-shrink-0 flex items-center rounded-md overflow-hidden select-none bg-true-gray-200 bg-opacity-50 dark:bg-dark-100 shadow-sm dark:shadow-light-900"
+      class="relative px-2 flex-shrink-0 flex items-center rounded-md overflow-hidden select-none bg-true-gray-200 bg-opacity-50 dark:bg-dark-100 shadow-sm dark:shadow-dark-50"
     >
       <select
         :value="info.page"

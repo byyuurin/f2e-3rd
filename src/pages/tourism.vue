@@ -10,7 +10,7 @@ import { isDark } from '/src/meta'
 <template>
   <div class="relative h-auto min-h-full flex flex-col">
     <div
-      class="sticky z-10 top-0 flex flex-wrap items-center px-5 py-2 mb-[2px] bg-light-50 dark:text-white dark:bg-dark-300 shadow-sm dark:shadow-light-900"
+      class="sticky z-10 top-0 flex flex-wrap items-center px-5 py-2 mb-[2px] bg-light-50 dark:text-white dark:bg-dark-300 shadow-sm dark:shadow-dark-50"
     >
       <div class="rounded-md w-15 h-15 leading-15 bg-yellow-300 text-[0px] text-center text-white">
         <svg-vs-butterfly class="inline-block align-middle text-4xl text-light-50" />

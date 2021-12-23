@@ -20,7 +20,7 @@ const handleClick = () => {
 
 <template>
   <div
-    class="p-3 rounded-md inline-flex justify-center items-center align-top transition duration-100 select-none whitespace-nowrap overflow-hidden bg-true-gray-200 bg-opacity-50 dark:bg-dark-100 shadow-sm dark:shadow-light-900"
+    class="p-3 rounded-md inline-flex justify-center items-center align-top transition duration-100 select-none whitespace-nowrap overflow-hidden bg-true-gray-200 bg-opacity-50 dark:bg-dark-100 shadow-sm dark:shadow-dark-50"
     :class="
       props.disabled
         ? 'cursor-not-allowed opacity-55'
