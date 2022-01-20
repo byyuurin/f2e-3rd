@@ -14,8 +14,8 @@ export interface PointType {
 }
 
 export interface ScenicSpotTourismInfo {
-  ID: string // 景點代碼
-  Name?: string // 景點名稱
+  ScenicSpotID: string // 景點代碼
+  ScenicSpotName: string // 景點名稱
   DescriptionDetail?: string // 景點特色詳細說明
   Description?: string // 景點特色精簡說明
   Phone?: string // 景點服務電話
@@ -42,10 +42,8 @@ export interface ScenicSpotTourismInfo {
 }
 
 export interface RestaurantTourismInfo {
-  ID: string // 餐飲店家代碼
   RestaurantID: string // 餐飲店家代碼
-  Name?: string // 餐飲店家名稱
-  RestaurantName?: string // 餐飲店家名稱
+  RestaurantName: string // 餐飲店家名稱
   Description?: string // 店家簡述
   Address?: string // 店家地址
   ZipCode?: string // 郵遞區號
@@ -63,10 +61,8 @@ export interface RestaurantTourismInfo {
 }
 
 export interface HotelTourismInfo {
-  ID: string // 旅館民宿代碼
   HotelID: string // 旅館民宿代碼
-  Name?: string //): 旅館民宿名稱
-  HotelName?: string //): 旅館民宿名稱
+  HotelName: string //): 旅館民宿名稱
   Description?: string //): 旅館民宿簡述
   Grade?: string //): 觀光旅館星級
   Address?: string //): 旅館民宿地址
@@ -87,10 +83,8 @@ export interface HotelTourismInfo {
 }
 
 export interface ActivityTourismInfo {
-  ID: string //  活動訊息代碼
   ActivityID: string //  活動訊息代碼
-  Name?: string // 活動名稱
-  ActivityName?: string // 活動名稱
+  ActivityName: string // 活動名稱
   Description?: string // 活動簡述
   Particpation?: string // 活動參與對象
   Location?: string // 主要活動地點名稱

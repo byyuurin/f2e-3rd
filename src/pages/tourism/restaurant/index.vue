@@ -64,17 +64,17 @@ if (store.restaurant.state.value.immediate) {
     <div ref="wrapperRef" class="flex flex-wrap items-stretch">
       <div
         v-for="item of data.items"
-        :key="item.ID"
+        :key="item.RestaurantID"
         class="group w-full p-2 md:max-w-1/2 xl:max-w-1/3 2xl:max-w-1/4 select-none"
       >
         <photo-card
           :src="item.Picture?.PictureUrl1"
           :alt="item.Picture?.PictureDescription1"
-          :title="item.Name"
+          :title="item.RestaurantName"
           :description="item.Description"
           :city="item.City"
           :time="item.OpenTime"
-          @more="handleReadMore(item.ID)"
+          @more="handleReadMore(item.RestaurantID)"
         />
       </div>
     </div>

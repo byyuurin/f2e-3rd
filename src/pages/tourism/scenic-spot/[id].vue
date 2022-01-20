@@ -8,7 +8,7 @@ const rootName = 'tourism-scenic-spot'
 const router = useRouter()
 const route = useRoute()
 const service = useService('Tourism')
-const search = service.request('/ScenicSpot', { $top: 1, $filter: `ID eq '${route.params.id}'` })
+const search = service.request('/ScenicSpot', { $top: 1, $filter: `ScenicSpotID eq '${route.params.id}'` })
 
 useHead({ title })
 
@@ -16,7 +16,7 @@ search.onFetchFinally(() => {
   if (!search.data.value?.length) {
     router.replace({ name: rootName })
   } else {
-    title.value = `${search.data.value[0].Name} - 台灣旅遊景點導覽`
+    title.value = `${search.data.value[0].ScenicSpotName} - 台灣旅遊景點導覽`
   }
 })
 
@@ -42,7 +42,7 @@ const mapUrl = computed(() => {
         </template>
       </ui-button>
 
-      <h2 class="flex-grow px-4 text-2xl dark:text-light-900" v-text="data?.Name" />
+      <h2 class="flex-grow px-4 text-2xl dark:text-light-900" v-text="data?.ScenicSpotName" />
     </div>
     <div class="flex flex-wrap py-4 w-full">
       <div class="w-full py-4 md:w-1/2">

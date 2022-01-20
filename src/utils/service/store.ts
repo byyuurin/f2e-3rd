@@ -108,7 +108,7 @@ export const createStore = () => {
   // 觀光景點
   const scenicSpot = register('scenicSpot', () => {
     const service = useService('Tourism')
-    const summary = service.request('/ScenicSpot', { $select: 'ID' })
+    const summary = service.request('/ScenicSpot', { $select: 'ScenicSpotID' })
     const search = service.request('/ScenicSpot', {})
     const state = ref({ immediate: true, page: 1, size: 20 })
 
@@ -134,7 +134,7 @@ export const createStore = () => {
   // 觀光餐飲
   const restaurant = register('restaurant', () => {
     const service = useService('Tourism')
-    const summary = service.request('/Restaurant', { $select: 'ID' })
+    const summary = service.request('/Restaurant', { $select: 'RestaurantID' })
     const search = service.request('/Restaurant', {})
     const state = ref({ immediate: true, page: 1, size: 20 })
 
@@ -160,7 +160,7 @@ export const createStore = () => {
   // 觀光旅宿
   const hotel = register('hotel', () => {
     const service = useService('Tourism')
-    const summary = service.request('/Hotel', { $select: 'ID' })
+    const summary = service.request('/Hotel', { $select: 'HotelID' })
     const search = service.request('/Hotel', {})
     const state = ref({ immediate: true, page: 1, size: 20 })
 
@@ -186,7 +186,7 @@ export const createStore = () => {
   // 觀光活動
   const activity = register('activity', () => {
     const service = useService('Tourism')
-    const summary = service.request('/Activity', { $select: 'ID' })
+    const summary = service.request('/Activity', { $select: 'ActivityID' })
     const search = service.request('/Activity', {})
     const state = ref({ immediate: true, page: 1, size: 20 })
 
