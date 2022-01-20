@@ -1,1 +1,0 @@
-import{d as n,g as r,q as s,a,r as c,o as u,c as i}from"./vendor.053e3b75.js";import{i as p}from"./index.b87b7448.js";const v=n({setup(_){const e=p(),o=r(()=>s(e==null?void 0:e.title)||"Page Not Found");return a({title:o}),(d,m)=>{const t=c("router-view");return u(),i(t)}}});export{v as default};
